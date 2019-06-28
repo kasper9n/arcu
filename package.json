@@ -1,8 +1,28 @@
 {
-    "scripts": {
-        "start": "electron src/main.js"
-    },
-    "devDependencies": {
-        "electron": "^5.0.6"
-    }
+	"main": "src/main.js",
+	"scripts": {
+		"start": "electron src",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder"
+	},
+	"devDependencies": {
+		"electron": "^5.0.6",
+		"electron-builder": "^20.44.4"
+	},
+	"name": "arcu",
+	"author": "kasper.space",
+	"version": "1.0.0",
+	"repository": "spectralkh/arcu",
+	"build": {
+		"appId": "space.kasper.arcu",
+		"productName": "Arcu",
+		"mac": {
+			"category": "public.app-category.productivity",
+            "target": ["dmg"]
+		},
+		"directories": {
+			"buildResources": "resources",
+			"output": "dist"
+		}
+	}
 }

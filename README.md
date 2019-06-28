@@ -10,3 +10,7 @@ from Vestibulum arcu, latin for Spotlight.
 ### Get started
 1. Install [Node](https://nodejs.org/en/)
 2. Run `npm install` to get the dependencies of the project.
+
+### Commands
+- `npm run start` - start the app.
+- `npm run dist` - install dependencies.
