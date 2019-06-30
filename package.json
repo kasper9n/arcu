@@ -1,7 +1,7 @@
 {
 	"main": "src/main.js",
 	"scripts": {
-		"start": "electron src",
+		"start": "electron src/main.js",
 		"pack": "electron-builder --dir",
 		"dist": "electron-builder"
 	},
@@ -21,7 +21,7 @@
             "target": ["dmg"]
 		},
 		"directories": {
-			"buildResources": "resources",
+			"buildResources": "build_resources",
 			"output": "dist"
 		}
 	}
