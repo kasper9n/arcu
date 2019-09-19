@@ -1,4 +1,4 @@
-const { app, globalShortcut, BrowserWindow } = require('electron');
+const { app, globalShortcut, ipcMain } = require('electron');
 const { PanelWindow } = require('electron-panel-window');
 
 let barWindow = null;
@@ -9,23 +9,16 @@ app.on('ready', function() {
 		width: 700,
 		height: 100,
 		show: false,
-		resizable: false,
+		// resizable: false,
 		center: true,
 		fullscreenable: false,
-		// frameless does not work in PanelWindow
-		// frame: false
 	}); 
-	// setVisibleOnAllWorkspaces crashes the app with PanelWindow
-	// barWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
-	// barWindow.loadFile(`./main.html`);
-	// barWindow.loadURL(`file://${__dirname}/main.html`);
 	barWindow.loadFile('src/bar/index.html');
-	if (debug === false) {
-		barWindow.on('blur', function(event) {
-			console.log('BLUR');
-			barWindow.hide();
-		});
-	}
+
+  ipcMain.on('hide', (event, arg) => {
+    console.log('hide')
+    barWindow.hide()
+  })
 
 	const shortcut = 'Alt+CommandOrControl+Space' // 'CommandOrControl+Space'
 	globalShortcut.register(shortcut, () => {

@@ -9,11 +9,10 @@
 	"devDependencies": {
 		"electron": "^4.2.5",
 		"electron-builder": "^20.44.4",
+		"electron-panel-window": "git+https://github.com/probablykasper/electron-panel-window.git",
 		"electron-rebuild": "^1.8.5"
 	},
-	"dependencies": {
-		"electron-panel-window": "^2.0.0-1"
-	},
+	"dependencies": {},
 	"name": "arcu",
 	"author": "kasper.space",
 	"version": "1.0.0",
