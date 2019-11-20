@@ -2,27 +2,67 @@
 <html>
 
 <head>
-    <meta charset='UTF-8'>
-    <title>Hello World!</title>
-    <!-- <link rel='stylesheet' type='text/css' src='./index.css'> -->
-    </link>
+  <meta charset='UTF-8'>
+  <title>Hello World!</title>
+  <!-- <link rel='stylesheet' type='text/css' src='./index.css'> -->
+  </link>
 </head>
 
 <body>
-    <p>woo</p>
-    <style>
-        :root, html, body {
-            background-color: black;
-            color: white;
-        }
-        p {
-          -webkit-app-region: drag;
-          -webkit-user-select: none;
-        }
-    </style>
-    <!-- <input type='text' id='bar'> -->
+  <style>
+    :root, html, body {
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        margin: 0;
+    }
+    p {
+      -webkit-app-region: drag;
+      -webkit-user-select: none;
+    }
+    svg {
+      width: calc(40px - 4px*2);
+      height: calc(40px - 4px*2);
+      margin: 4px;
+      float: left;
+      padding: 10px 15px;
+    }
+    input {
+      background-color: transparent;
+      border: none;
+      color: white;
+      width: calc(100% - 40px - 15px*3);
+      height: 60px;
+      padding-top: 9px;
+      padding-bottom: 11px;
+      padding-right: 15px;
+      box-sizing: border-box;
+      outline: none;
+      font-size: 28px;
+      font-weight: 300;
+      float: left;
+    }
+  </style>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><defs><style>.cls-1{fill:none;}.cls-2{fill:#fff;}.cls-3{opacity:0.7;}.cls-4{fill:#ea7575;}.cls-5{fill:#a01a50;}.cls-6{fill:#e59595;}</style></defs><title>Asset 1</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect id="invisible_rectangle" data-name="invisible rectangle" class="cls-1" width="500" height="500"/><g id="shadow_bg_bar" data-name="shadow bg bar"><rect class="cls-2" x="210.97" y="27" width="89.79" height="469.48" transform="translate(-66.26 435.55) rotate(-74)"/><rect class="cls-2" x="209.71" y="144.36" width="89.79" height="469.48" transform="translate(-179.99 519.35) rotate(-74)"/><rect class="cls-2" x="212.24" y="-90.37" width="89.79" height="469.48" transform="translate(47.47 351.75) rotate(-74)"/></g><g id="shadow_bar" data-name="shadow bar" class="cls-3"><rect class="cls-4" x="210.97" y="27" width="89.79" height="469.48" transform="translate(-66.26 435.55) rotate(-74)"/><rect class="cls-5" x="209.71" y="144.36" width="89.79" height="469.48" transform="translate(-179.99 519.35) rotate(-74)"/><rect class="cls-6" x="212.24" y="-90.37" width="89.79" height="469.48" transform="translate(47.47 351.75) rotate(-74)"/></g><g id="top_bar" data-name="top bar"><rect class="cls-4" x="199.24" y="3.52" width="89.79" height="469.48" transform="translate(-52.19 407.26) rotate(-74)"/><rect class="cls-5" x="197.98" y="120.89" width="89.79" height="469.48" transform="translate(-165.92 491.06) rotate(-74)"/><rect class="cls-6" x="200.5" y="-113.84" width="89.79" height="469.48" transform="translate(61.54 323.46) rotate(-74)"/></g></g></g></svg>
+  <input type='text' id='bar'>
 
-    <script type='text/javascript' src='./index.js'></script>
+  <script type='text/javascript' src='./index.js'></script>
+  <script>
+    const barElement = document.getElementById('bar');
+    barElement.focus();
+    // let number = 0;
+    // document.getElementById('bar').value = number;
+    // window.addEventListener('keydown', (e) => {
+    //   console.log(e)
+    //   number++;
+    //   document.getElementById('bar').value = number;
+    // })
+    // document.addEventListener('keydown', (e) => {
+    //   console.log(e)
+    //   number++;
+    //   document.getElementById('bar').value = number;
+    // })
+
+  </script>
 </body>
 
 </html>
