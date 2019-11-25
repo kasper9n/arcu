@@ -1,16 +1,18 @@
-// document.getElementById('bar').focus();
-// const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron')
 
-// document.getElementsByTagName('p')[0].innerHTML = 'js works & red if css works';
+const barElement = document.getElementById('bar')
+barElement.focus()
 
-// window.onblur = () => {
-//   document.getElementsByTagName('p')[0].innerHTML = 'BLURRRR';
-//   ipcRenderer.send('hide')
-// }
-
-window.addEventListener('keydown', (e) => {
+barElement.addEventListener('input', (e) => {
+  console.log('i')
   console.log(e)
+  ipcRenderer.send('search-update', {
+    query: barElement.value,
+    type: e.inputType,
+    data: e.data,
+  })
 })
-document.addEventListener('keydown', (e) => {
-  console.log(e)
+
+ipcRenderer.on('after-hide', (e) => {
+  barElement.select()
 })

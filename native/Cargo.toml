@@ -1,13 +1,14 @@
 [package]
-name = "xxxvv"
+name = "arcu"
 version = "0.1.0"
 authors = ["Kasper <kasperkh.kh@gmail.com>"]
 license = "MIT"
 build = "build.rs"
 exclude = ["artifacts.json", "index.node"]
+edition = "2018"
 
 [lib]
-name = "xxxvv"
+name = "arcu"
 crate-type = ["cdylib"]
 
 [build-dependencies]
@@ -15,3 +16,4 @@ neon-build = "0.3.3"
 
 [dependencies]
 neon = "0.3.3"
+rsc = "2.0.0"

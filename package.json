@@ -1,33 +1,36 @@
 {
-	"main": "src/main.js",
-	"scripts": {
-		"start": "electron .",
-		"pack": "electron-builder --dir",
-		"dist": "electron-builder",
-		"build": "electron-build-env neon build --release"
-	},
-	"devDependencies": {
-		"electron": "^7.1.2",
-		"electron-build-env": "^0.2.0",
-		"electron-builder": "^21.2.0",
-		"neon-cli": "^0.3.3"
-	},
-	"name": "arcu",
-	"author": "kasper.space",
-	"version": "1.0.0",
-	"repository": "spectralkh/arcu",
-	"build": {
-		"appId": "space.kasper.arcu",
-		"productName": "Arcu",
-		"mac": {
-			"category": "public.app-category.productivity",
-			"target": [
-				"dmg"
-			]
-		},
-		"directories": {
-			"buildResources": "build_resources",
-			"output": "dist"
-		}
-	}
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build": "electron-build-env neon build --release"
+  },
+  "devDependencies": {
+    "electron": "^6.1.5",
+    "electron-build-env": "^0.2.0",
+    "electron-builder": "^21.2.0",
+    "neon-cli": "^0.3.3"
+  },
+  "name": "arcu",
+  "author": "kasper.space",
+  "version": "1.0.0",
+  "repository": "spectralkh/arcu",
+  "build": {
+    "appId": "space.kasper.arcu",
+    "productName": "Arcu",
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg"
+      ],
+      "extendInfo": {
+        "NSRequiresAquaSystemAppearance": false
+      }
+    },
+    "directories": {
+      "buildResources": "build_resources",
+      "output": "dist"
+    }
+  }
 }

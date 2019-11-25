@@ -1,14 +1,13 @@
-const { app, globalShortcut, ipcMain, BrowserWindow } = require('electron')
+const { app, globalShortcut, ipcMain, BrowserWindow, Electron, Menu } = require('electron')
 
 const addon = require('../native')
 
-console.log(addon.hello())
+const debug = true
 
-let barWindow = null;
-const debug = false;
+let barWindow = null
 
 app.on('ready', function() {
-	const barWindow = new BrowserWindow({
+	barWindow = new BrowserWindow({
 		width: 650,
 		height: 60,
 		show: false,
@@ -16,31 +15,34 @@ app.on('ready', function() {
 		center: true,
 		fullscreenable: false,
     transparent: true,
-    // titleBarStyle: 'hidden',
     frame: false,
+    center: true,
+    alwaysOnTop: true,
     vibrancy: 'dark',
-	});
-  barWindow.center()
+    webPreferences: {
+      nodeIntegration: true,
+    },
+	})
 	barWindow.loadFile('src/bar/index.html')
 
+  function hide() {
+    app.hide()
+    barWindow.webContents.send('after-hide')
+  }
+  function show() {
+    barWindow.show()
+  }
 
-  // ipcMain.on('hide', (event, arg) => {
-  //   barWindow.hide()
-  // })
+  if (!debug) barWindow.on('blur', hide)
 
-  barWindow.on('blur', (event, arg) => {
-    barWindow.hide()
+  ipcMain.on('search-update', (e, value) => {
+    console.log('search-update:')
+    addon.main(value)
   })
 
-	const shortcut = 'Alt+CommandOrControl+Space' // 'CommandOrControl+Space'
-	globalShortcut.register(shortcut, () => {
-		if (barWindow.isVisible()) {
-			barWindow.hide()
-      app.hide()
-		} else {
-			barWindow.show()
-		}
-		console.log(`${shortcut} is pressed`)
-		// barWindow.webContents.openDevTools({ options: { mode: 'detach' } });
-	});
-});
+	globalShortcut.register('Alt+CommandOrControl+Space', () => {
+    barWindow.isVisible() ? hide() : show()
+		console.log(`shortcut pressed`)
+		if (debug) barWindow.webContents.openDevTools({ options: { mode: 'detach' } })
+	})
+})

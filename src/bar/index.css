@@ -1,0 +1,36 @@
+    :root,
+    html,
+    body {
+    	background-color: rgba(0, 0, 0, 0.5);
+    	color: white;
+    	margin: 0;
+    }
+
+    p {
+    	-webkit-app-region: drag;
+    	-webkit-user-select: none;
+    }
+
+    img {
+    	width: calc(40px - 4px*2);
+    	height: calc(40px - 4px*2);
+    	margin: 4px;
+    	float: left;
+    	padding: 10px 12px;
+    }
+
+    input {
+    	background-color: transparent;
+    	border: none;
+    	color: white;
+    	width: calc(100% - 40px - 15px*3);
+    	height: 60px;
+    	padding-top: 9px;
+    	padding-bottom: 11px;
+    	padding-right: 15px;
+    	box-sizing: border-box;
+    	outline: none;
+    	font-size: 28px;
+    	font-weight: 300;
+    	float: left;
+    }
