@@ -11,7 +11,7 @@ pub fn main(query: &str) -> Vec<Result> {
     println!("Nothing");
     let vec: Vec<Result> = vec![
       Result {
-        confidence: 10,
+        confidence: 0,
         minitext: "".to_owned(),
       }
     ];

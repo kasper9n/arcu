@@ -1,9 +1,23 @@
-    :root,
-    html,
-    body {
-    	background-color: rgba(0, 0, 0, 0.5);
-    	color: white;
+    :root, html, body {
     	margin: 0;
+    }
+
+    :root {
+      --logo-size: 32px;
+      --logo-padding-side: 16px;
+      --logo-area: calc(var(--logo-size) + var(--logo-padding-side));
+      --window-width: 650px;
+      --bar-padding-top: 9px;
+      --bar-padding-bottom: 11px;
+      --bar-height: calc(var(--window-base-height) - var(--bar-padding-top) - var(--bar-padding-bottom));
+      --window-base-height: 60px;
+    }
+
+    html {
+    	background-color: rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
 
     p {
@@ -11,26 +25,54 @@
     	-webkit-user-select: none;
     }
 
-    img {
-    	width: calc(40px - 4px*2);
-    	height: calc(40px - 4px*2);
-    	margin: 4px;
+    #logo {
+    	width: var(--logo-size);
+    	height: var(--logo-size);
     	float: left;
-    	padding: 10px 12px;
+    	padding: 14px var(--logo-padding-side);
     }
 
-    input {
+    #bar, #bar-copy {
+      display: inline-block;
+      top: 0px;
+      line-height: var(--bar-height);
+      font-size: 28px;
+      font-weight: 300;
+    	padding-top: var(--bar-padding-top);
+    	padding-bottom: var(--bar-padding-bottom);
+      margin: 0px;
+    	box-sizing: border-box;
+    }
+
+    #bar {
+      position: absolute;
+      left: 0px;
+      width: var(--window-width);
+      pointer-events: all;
     	background-color: transparent;
     	border: none;
     	color: white;
-    	width: calc(100% - 40px - 15px*3);
-    	height: 60px;
-    	padding-top: 9px;
-    	padding-bottom: 11px;
+      padding-left: calc(var(--logo-size) + 2*var(--logo-padding-side));
     	padding-right: 15px;
-    	box-sizing: border-box;
     	outline: none;
-    	font-size: 28px;
-    	font-weight: 300;
     	float: left;
+    }
+
+    #minitext-container {
+      display: flex;
+      align-items: center;
+      top: 0px;
+      left: 0px;
+    	margin-left: calc(var(--logo-size) + 2*var(--logo-padding-side));
+    }
+
+    #bar-copy {
+      visibility: hidden;
+      white-space: pre;
+    }
+
+    #minitext {
+      font-size: 16px;
+      white-space: pre;
+      opacity: 0.6;
     }

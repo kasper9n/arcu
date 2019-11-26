@@ -36,9 +36,8 @@ app.on('ready', function() {
   if (!debug) barWindow.on('blur', hide)
 
   ipcMain.on('search-update', (e, value) => {
-    console.log('search-update:')
     const results = addon.main(value)
-    console.log(results)
+    console.log('search-update:', results)
     barWindow.webContents.send('results', results)
     // e.reply(results)
   })

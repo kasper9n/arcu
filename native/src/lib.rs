@@ -4,7 +4,7 @@ mod calculator;
 
 #[derive(Debug)]
 pub struct Result {
-  confidence: i8,
+  confidence: i8, // confidence 0-10
   minitext: String,
 }
 
