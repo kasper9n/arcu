@@ -37,7 +37,10 @@ app.on('ready', function() {
 
   ipcMain.on('search-update', (e, value) => {
     console.log('search-update:')
-    addon.main(value)
+    const results = addon.main(value)
+    console.log(results)
+    barWindow.webContents.send('results', results)
+    // e.reply(results)
   })
 
 	globalShortcut.register('Alt+CommandOrControl+Space', () => {
