@@ -1,8 +1,9 @@
 const { app, globalShortcut, ipcMain, BrowserWindow, Electron, Menu } = require('electron')
+const { performance } = require('perf_hooks')
 
 const addon = require('../native')
 
-const debug = true
+const debug = process.env.DEBUG ? true : false
 
 let barWindow = null
 
@@ -35,16 +36,28 @@ app.on('ready', function() {
 
   if (!debug) barWindow.on('blur', hide)
 
+  const userDataDir = app.getPath('userData')
+  const arcu = new addon.Arcu(userDataDir)
+
   ipcMain.on('search-update', (e, value) => {
-    const results = addon.main(value)
+
+    var t0 = performance.now()
+    const results = arcu.query(value)
+    var t1 = performance.now()
+    console.log('PERFORMANCE: ' + (t1 - t0).toFixed(3) + 'ms (js query)')
+
     console.log('search-update:', results)
     barWindow.webContents.send('results', results)
-    // e.reply(results)
+    
   })
 
 	globalShortcut.register('Alt+CommandOrControl+Space', () => {
+    if (debug) barWindow.webContents.openDevTools({ options: { mode: 'detach' } })
     barWindow.isVisible() ? hide() : show()
 		console.log(`shortcut pressed`)
-		if (debug) barWindow.webContents.openDevTools({ options: { mode: 'detach' } })
 	})
+})
+
+ipcMain.on('log', (e, value) => {
+  console.log.apply(this, value)
 })

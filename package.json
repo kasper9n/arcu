@@ -1,7 +1,8 @@
 {
   "main": "src/main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "npm run build && DEBUG=true electron .",
+    "start-nobuild": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build": "electron-build-env neon build --release"
