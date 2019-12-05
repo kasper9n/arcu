@@ -3,8 +3,8 @@
   "scripts": {
     "start": "npm run build && DEBUG=true electron .",
     "start-nobuild": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
     "build": "electron-build-env neon build --release"
   },
   "devDependencies": {
@@ -29,6 +29,11 @@
         "NSRequiresAquaSystemAppearance": false
       }
     },
+    "asar": false,
+    "files": [
+      "src",
+      "native/index.node"
+    ],
     "directories": {
       "buildResources": "build_resources",
       "output": "dist"
