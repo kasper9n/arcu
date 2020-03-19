@@ -32,6 +32,8 @@ from Vestibulum arcu, latin for Spotlight.
   - Binary/Base32
   - [Units used by Rink](https://github.com/tiffany352/rink-rs/blob/master/definitions.units)
 - Currency and stocks
+  - https://api.exchangerate-api.com/v4/latest/USD
+  - https://developers.coinbase.com/api/v2
 - Dictionary
 - Countdown/timer
   - Can show on top of window
