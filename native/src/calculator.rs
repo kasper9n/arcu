@@ -1,34 +1,19 @@
-use crate::Result;
+use cpc::{eval, units::Unit};
 
-pub fn main(query: &str) -> Vec<Result> {
-  use rsc::computer::Computer;
-
-  let mut computer = Computer::<f64>::default();
-
-  // assert!(computer.eval(&query).unwrap() == 5.3);
-  let eval_result = computer.eval(&query);
-  if eval_result.is_err() {
-    println!("Nothing");
-    let vec: Vec<Result> = vec![
-      Result {
-        confidence: 0,
-        minitext: "".to_owned(),
-      }
-    ];
-    return vec;
-  } else {
-    let unwrapped_eval_result = eval_result.unwrap();
-    println!("{}", &unwrapped_eval_result);
-
-    let minitext = "= ".to_owned()+&unwrapped_eval_result.to_string();
-
-    let vec: Vec<Result> = vec![
-      Result {
-        confidence: 10,
-        minitext: minitext,
-      }
-    ];
-
-    return vec;
+pub fn main(query: &str) -> String {
+  println!("X query {:?}", query);
+  match eval(&query, true, Unit::Celsius, false) {
+    Ok(number) => {
+      let value = number.value.to_string();
+      let unit = match number.unit {
+        Unit::NoUnit => "".to_owned(),
+        x => format!(" {:?}", x),
+      };
+      return "= ".to_owned()+&value+&unit
+    },
+    Err(e) => {
+      println!("X err {:?}", e);
+      return "".to_string()
+    }
   }
 }

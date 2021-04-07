@@ -5,7 +5,6 @@ function log(...value) {
 };
 
 const barElement = document.getElementById('bar')
-const barCopyElement = document.getElementById('bar-copy')
 const minitextElement = document.getElementById('minitext')
 
 barElement.focus()
@@ -15,20 +14,25 @@ let t1
 
 barElement.addEventListener('input', (e) => {
   t0 = performance.now()
-  ipcRenderer.send('search-update', {
-    full_value: barElement.value,
-    // type: e.inputType,
-    // data: e.data,
-  })
+  ipcRenderer.send('search-update', barElement.innerHTML)
   console.log('input', e)
+})
+
+ipcRenderer.on('show', (e, value) => {
+  barElement.focus()
+})
+document.addEventListener('mousedown', (e) => {
+  if (e.target !== barElement) {
+    e.preventDefault()
+  }
+  // barElement.focus()
 })
 
 ipcRenderer.on('results', (e, value) => {
   t1 = performance.now()
   log('PERFORMANCE: ' + (t1-t0).toFixed(3) + 'ms (input to result)')
 
-  barCopyElement.innerText = barElement.value
-  minitextElement.innerHTML = " "+value[0].minitext
+  minitextElement.innerHTML = value
 
   t0 = null
   t1 = null

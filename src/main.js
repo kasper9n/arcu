@@ -13,7 +13,6 @@ app.on('ready', function() {
 		height: 60,
 		show: false,
 		resizable: false,
-		center: true,
 		fullscreenable: false,
     transparent: true,
     frame: false,
@@ -22,6 +21,7 @@ app.on('ready', function() {
     vibrancy: 'dark',
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
 	})
 	barWindow.loadFile('src/bar/index.html')
@@ -32,27 +32,25 @@ app.on('ready', function() {
   }
   function show() {
     barWindow.show()
+    barWindow.webContents.send('show')
   }
 
   if (!debug) barWindow.on('blur', hide)
 
-  const userDataDir = app.getPath('userData')
-  const arcu = new addon.Arcu(userDataDir)
-
   ipcMain.on('search-update', (e, value) => {
 
     var t0 = performance.now()
-    const results = arcu.query(value)
+    const minitext = addon.query(value)
     var t1 = performance.now()
     console.log('PERFORMANCE: ' + (t1 - t0).toFixed(3) + 'ms (js query)')
 
-    console.log('search-update:', results)
-    barWindow.webContents.send('results', results)
+    console.log('search-update:', minitext)
+    barWindow.webContents.send('results', minitext)
     
   })
 
 	globalShortcut.register('Alt+CommandOrControl+Space', () => {
-    if (debug) barWindow.webContents.openDevTools({ options: { mode: 'detach' } })
+    // if (debug) barWindow.webContents.openDevTools({ options: { mode: 'detach' } })
     barWindow.isVisible() ? hide() : show()
 		console.log(`shortcut pressed`)
 	})

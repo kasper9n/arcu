@@ -10,6 +10,7 @@
   --bar-padding-top: 9px;
   --bar-padding-bottom: 11px;
   --window-base-height: 60px;
+  --input-padding-right: 100px;
 }
 
 html {
@@ -20,60 +21,42 @@ html {
 }
 
 p {
-  -webkit-app-region: drag;
-  -webkit-user-select: none;
+  user-select: none;
 }
 
 #bar-container {
-  width: 100%;
+  width: calc(100% + var(--logo-padding-side));
   height: 60px;
+  display: flex;
+  align-items: center;
   display: flex;
   align-items: center;
 }
 
   #logo {
-    position: absolute;
     width: var(--logo-size);
     height: var(--logo-size);
     padding-left: var(--logo-padding-side);
     padding-right: var(--logo-padding-side);
-  }
-
-  #bar, #bar-copy {
-    display: inline-block;
-    font-size: 28px;
-    font-weight: 300;
-    margin: 0px;
-    box-sizing: border-box;
-    padding: 0px;
+    -webkit-app-region: drag;
   }
 
   #bar {
-    position: absolute;
-    width: calc(100% - var(--logo-area-width));
+    padding-right: 1px;
+    font-size: 28px;
+    border-right: solid var(--input-padding-right) transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 300;
     pointer-events: all;
-    background-color: transparent;
-    border: none;
-    color: white;
-    margin-left: var(--logo-area-width);
     outline: none;
   }
 
-  #minitext-container {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    margin-left: var(--logo-area-width);
+  #minitext {
+    transform: translateX(calc(-1 * var(--input-padding-right)));
+    width: 0px;
+    font-size: 14px;
+    white-space: pre;
+    opacity: 0.6;
+    margin-left: 5px;
   }
-
-    #bar-copy {
-      visibility: hidden;
-      white-space: pre;
-    }
-
-    #minitext {
-      font-size: 16px;
-      white-space: pre;
-      opacity: 0.6;
-      margin: 0px;
-    }
