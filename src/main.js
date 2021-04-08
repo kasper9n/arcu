@@ -1,11 +1,15 @@
-const { app, globalShortcut, ipcMain, BrowserWindow, Electron, Menu } = require('electron')
+const { app, globalShortcut, ipcMain, BrowserWindow, Tray, Menu } = require('electron')
 const { performance } = require('perf_hooks')
+
+const isMac = process.platform === 'darwin'
 
 const addon = require('../native')
 
 const debug = process.env.DEBUG ? true : false
 
 let barWindow = null
+
+let tray = null
 
 app.on('ready', function() {
 	barWindow = new BrowserWindow({
@@ -18,7 +22,7 @@ app.on('ready', function() {
     frame: false,
     center: true,
     alwaysOnTop: true,
-    vibrancy: 'dark',
+    vibrancy: 'hud',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -33,6 +37,20 @@ app.on('ready', function() {
   function show() {
     barWindow.show()
     barWindow.webContents.send('show')
+  }
+  function toggle() {
+    barWindow.isVisible() ? hide() : show()
+  }
+
+  tray = new Tray('src/tray-icon/TrayIconTemplate.png')
+  if (isMac) {
+    tray.on('mouse-down', () => {
+      toggle()
+    })
+  } else {
+    tray.on('click', () => {
+      toggle()
+    })
   }
 
   if (!debug) barWindow.on('blur', hide)
@@ -49,9 +67,9 @@ app.on('ready', function() {
     
   })
 
-	globalShortcut.register('Alt+CommandOrControl+Space', () => {
-    // if (debug) barWindow.webContents.openDevTools({ options: { mode: 'detach' } })
-    barWindow.isVisible() ? hide() : show()
+	globalShortcut.register('Alt+Space', () => {
+    if (debug) barWindow.webContents.openDevTools({ options: { mode: 'detach' } })
+    toggle()
 		console.log(`shortcut pressed`)
 	})
 })

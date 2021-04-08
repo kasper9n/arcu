@@ -15,8 +15,7 @@ from Vestibulum arcu, latin for Spotlight.
 ### Commands
 
 * `npm run dev`: Build and Start the app.
-* `npm run build`: Build the Rust part of the app.
-* `npm run dist`: Build the app.
+* `npm run build`: Build the app.
 * `npm run pack`: Build unpacked dir. Useful to test.
 
 ### ToDo

@@ -1,11 +1,12 @@
 {
   "main": "src/main.js",
   "scripts": {
-    "dev": "npm run build && DEBUG=true electron .",
+    "dev": "npm run napi && DEBUG=true electron .",
+    "dev-release": "npm run napi && electron .",
     "dev-nobuild": "electron .",
-    "pack": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
-    "build": "electron-build-env napi build --cargo-cwd ./native --release"
+    "pack": "npm run napi && electron-builder --dir",
+    "build": "npm run napi && electron-builder",
+    "napi": "electron-build-env napi build --cargo-cwd ./native --release"
   },
   "devDependencies": {
     "electron": "^12.0.2",
@@ -26,10 +27,10 @@
         "dmg"
       ],
       "extendInfo": {
-        "NSRequiresAquaSystemAppearance": false
+        "NSRequiresAquaSystemAppearance": false,
+        "LSUIElement": true
       }
     },
-    "asar": false,
     "files": [
       "src",
       "native/index.node"
