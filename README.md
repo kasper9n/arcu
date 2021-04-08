@@ -14,33 +14,26 @@ from Vestibulum arcu, latin for Spotlight.
 
 ### Commands
 
-* `npm run dev`: Build and Start the app.
-* `npm run build`: Build the app.
-* `npm run pack`: Build unpacked dir. Useful to test.
+- `npm run dev`: Build and Start the app.
+- `npm run build`: Build the app.
+- `npm run pack`: Build unpacked dir. Useful to test.
 
 ### ToDo
-* Unit conversion (make crate for this)
-  * Length
-  * Time
-  * Weight
-  * Bytes
-  * Timezones
-  * Temperature
-  * Mass
-  * Volume
-  * Binary/Base32
-  * [Units used by Rink](https://github.com/tiffany352/rink-rs/blob/master/definitions.units)
-* Currency and stocks
-  * https://api.exchangerate-api.com/v4/latest/USD
-  * https://developers.coinbase.com/api/v2
-* Dictionary
-* Countdown/timer
-  * Can show on top of window
-* Run shell command
-* Web search
-* Unit math
-* Calculator
-  * Percentages
-  * 1+e24
-* App launcher
-* Window switcher
+- Stocks
+- Dictionary
+- Countdown/timer
+  - Can show on top of window
+- Run shell command
+- Web search
+- App launcher
+- Window switcher
+- File search
+  - https://developer.apple.com/documentation/coreservices/search_kit
+- Macros
+- Move to Rust?
+  - https://docs.rs/enigo for macros
+  - Shortcuts
+    - https://github.com/tauri-apps/tauri/blob/dev/tauri-api/src/shortcuts.rs
+    - https://github.com/tauri-apps/tauri-hotkey-rs/blob/dev/src/lib.rs
+    - https://docs.rs/rdev
+    - https://github.com/obv-mikhail/InputBot/issues/30 (https://github.com/aaronleopold/InputBot)
