@@ -32,6 +32,7 @@ from Vestibulum arcu, latin for Spotlight.
 - Macros
 - Move to Rust?
   - https://docs.rs/enigo for macros
+  - Tray icon? Clipboard support?
   - Shortcuts
     - https://github.com/tauri-apps/tauri/blob/dev/tauri-api/src/shortcuts.rs
     - https://github.com/tauri-apps/tauri-hotkey-rs/blob/dev/src/lib.rs
