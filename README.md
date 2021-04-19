@@ -5,18 +5,17 @@ Alternative to macOS Spotlight.
 **/ɑɹkuː/**
 from Vestibulum arcu, latin for Spotlight.
 
-## Dev Instructions
+## Dev instructions
 
-### Get started
 1. Install Node.js (v14 works)
-2. Install Rust (v1.49 works)
-3. Run `npm install`
+2. Install Rust (v1.50 works)
+3. Follow the [Tauri setup guide](https://tauri.studio/en/docs/getting-started/intro)
+4. Run `npm install`
 
 ### Commands
 
-- `npm run dev`: Build and Start the app.
-- `npm run build`: Build the app.
-- `npm run pack`: Build unpacked dir. Useful to test.
+- `npm run dev`: Start app in dev mode
+- `npm run build`: Build app
 
 ### ToDo
 - Stocks
