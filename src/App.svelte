@@ -21,19 +21,20 @@
   }
 
   let barElement
-  onMount(() => {
+  onMount(async () => {
     let shown = false
     unregisterAll()
-    // register('Alt+Space', () => {
-    //   shown = !shown
-    //   if (shown) {
-    //     appWindow.show()
-    //     barElement.focus()
-    //   } else {
-    //     appWindow.hide()
-    //     barElement.select()
-    //   }
-    // })
+    const x = register('Alt+Space', () => {
+      shown = !shown
+      if (shown) {
+        appWindow.show()
+        barElement.focus()
+      } else {
+        appWindow.hide()
+        barElement.select()
+      }
+    })
+    console.log(await x)
   })
 </script>
 
