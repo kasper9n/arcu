@@ -4,6 +4,8 @@ use tauri::command;
 #[command]
 pub fn query(value: String) -> String {
   println!("X query {:?}", value);
+  println!("X query len {:?}", value.len());
+  println!("X query charlen {:?}", value.chars().count());
   match eval(&value, true, Unit::Celsius, false) {
     Ok(number) => {
       let value = number.value.to_string();

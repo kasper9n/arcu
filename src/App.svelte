@@ -1,57 +1,59 @@
 <script>
-  import { appWindow } from '@tauri-apps/api/window'
-  import { onMount } from 'svelte'
-  import { invoke } from '@tauri-apps/api/tauri'
-  import { register, unregister, unregisterAll } from '@tauri-apps/api/globalShortcut'
-
-  const originalPosX = appWindow.x
-  const originalPosY = appWindow.y
-  function resetPos() {
-    appWindow.setPosition(originalPosX, originalPosY)
-  }
+  import { tauri, window as win, globalShortcut } from '@tauri-apps/api'
 
   let minitext = ''
   async function onInput(e) {
     try {
-      minitext = await invoke('query', { value: e.target.innerHTML })
+      console.log(e.target.innerText)
+      console.log(typeof e.target.innerText)
+      minitext = await tauri.invoke('query', { value: e.target.innerText })
     } catch (err) {
       console.error(err)
       minitext = err.toString()
     }
   }
 
-  let barElement
-  onMount(async () => {
-    let shown = false
-    unregisterAll()
-    const x = register('Alt+Space', () => {
-      shown = !shown
-      if (shown) {
-        appWindow.show()
-        barElement.focus()
-      } else {
-        appWindow.hide()
-        barElement.select()
-      }
-    })
-    console.log(await x)
-  })
+  function selectElementContents(el) {
+    var range = document.createRange()
+    range.selectNodeContents(el)
+    var sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
+  }
+
+  let shown = true
+  async function barShortcuts(barElement) {
+    globalShortcut.unregisterAll()
+    try {
+      await globalShortcut.register('Alt+Space', () => {
+        shown = !shown
+        if (shown) {
+          win.appWindow.show()
+          barElement.focus()
+        } else {
+          win.appWindow.hide()
+          selectElementContents(barElement)
+        }
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  }
 </script>
 
 <style lang="sass">
   :global(body)
     margin: 0
   :global(html)
-    background-color: rgba(0, 0, 0, 1)
+    background-color: #000000
     border: 1px solid white
     box-sizing: border-box
     height: 100%
     color: white
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    overflow: hidden
   :root
     --logo-size:32px
-    --logo-padding-side:16px
-    --logo-area-width:calc(var(--logo-size) + 2*var(--logo-padding-side))
     --window-width:650px
     --bar-padding-top:9px
     --bar-padding-bottom:11px
@@ -60,25 +62,25 @@
   p
     user-select: none
   main
-    width: calc(100% + var(--logo-padding-side))
     height: 60px
     display: flex
     align-items: center
   .logo
     width: var(--logo-size)
     height: var(--logo-size)
-    padding-left: var(--logo-padding-side)
-    padding-right: var(--logo-padding-side)
+    padding: 0px 16px
   .bar
     padding-right: 1px
     font-size: 28px
-    border-right: solid var(--input-padding-right) transparent
+    border-right: var(--input-padding-right) solid transparent
     white-space: nowrap
     overflow: hidden
     font-weight: 300
     outline: none
   .minitext
-    transform: translateX(calc(-1 * var(--input-padding-right)))
+    pointer-events: none
+    position: relative
+    right: var(--input-padding-right)
     width: 0px
     font-size: 14px
     white-space: pre
@@ -87,7 +89,7 @@
 </style>
 
 <main>
-  <img class="drag-region logo" alt="logo" src="../logo.svg" on:dblclick={resetPos} />
-  <p class="bar" bind:this={barElement} contenteditable="true" on:input={onInput} />
+  <img class="drag-region logo" alt="logo" src="../logo.svg" />
+  <p class="bar" use:barShortcuts contenteditable="true" on:input={onInput} />
   <p class="minitext">{minitext}</p>
 </main>
