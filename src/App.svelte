@@ -1,5 +1,6 @@
 <script>
   import { tauri, window as win, globalShortcut } from '@tauri-apps/api'
+  import { onMount } from 'svelte'
 
   let minitext = ''
   async function onInput(e) {
@@ -22,6 +23,8 @@
   }
 
   let shown = true
+  let barElement
+
   async function barShortcuts(barElement) {
     globalShortcut.unregisterAll()
     try {
@@ -37,6 +40,32 @@
       })
     } catch (e) {
       console.error(e)
+    }
+  }
+
+  function checkShortcut(e, key, options) {
+    const isMac = navigator.userAgent.indexOf('Mac') != -1
+    if (e.key.toUpperCase() !== key.toUpperCase()) return false
+    if (e.shiftKey !== !!options.shift) return false
+    if (e.altKey !== !!options.alt) return false
+    if (options.cmdOrControl) {
+      if (e.ctrlKey === isMac) return false
+      if (e.metaKey === !isMac) return false
+    }
+    return true
+  }
+
+  function keydown(e) {
+    console.log(e)
+    if (checkShortcut(e, 'A', { cmdOrControl: true })) {
+      e.preventDefault()
+      selectElementContents(barElement)
+    } else if (checkShortcut(e, 'Z', { cmdOrControl: true })) {
+      e.preventDefault()
+      document.execCommand('undo')
+    } else if (checkShortcut(e, 'Z', { cmdOrControl: true, shift: true })) {
+      e.preventDefault()
+      document.execCommand('redo')
     }
   }
 </script>
@@ -88,8 +117,14 @@
     margin-left: 5px
 </style>
 
+<svelte:window on:keydown={keydown} />
 <main>
   <img class="drag-region logo" alt="logo" src="../logo.svg" />
-  <p class="bar" use:barShortcuts contenteditable="true" on:input={onInput} />
+  <p
+    class="bar"
+    use:barShortcuts
+    bind:this={barElement}
+    contenteditable="plaintext-only"
+    on:input={onInput} />
   <p class="minitext">{minitext}</p>
 </main>
