@@ -119,7 +119,7 @@
 
 <svelte:window on:keydown={keydown} />
 <main>
-  <img class="drag-region logo" alt="logo" src="../logo.svg" />
+  <img data-tauri-drag-region class="logo" alt="logo" src="../logo.svg" />
   <p
     class="bar"
     use:barShortcuts
