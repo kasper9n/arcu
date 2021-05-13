@@ -25,6 +25,7 @@ from Vestibulum arcu, latin for Spotlight.
 - Run shell command
 - Web search
 - App launcher
+  - https://github.com/oliverschwendener/ueli
 - Window switcher
 - File search
   - https://developer.apple.com/documentation/coreservices/search_kit

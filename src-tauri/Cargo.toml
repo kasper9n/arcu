@@ -1,5 +1,6 @@
 [package]
 name = "arcu"
+description = "Spotlight alternative"
 version = "0.1.0"
 edition = "2018"
 build = "src/build.rs"
@@ -10,7 +11,7 @@ tauri-build = { version = "1.0.0-beta.0" }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.0.0-beta.1",features = ["api-all", "system-tray"] }
+tauri = { version = "1.0.0-beta.1",features = ["api-all", "system-tray", "menu"] }
 tao = "0.2.3"
 # tauri = { git = "https://github.com/tauri-apps/tauri", rev = "b6b4128", features = ["api-all"] }
 cpc = "1.5.0"

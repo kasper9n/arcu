@@ -5,6 +5,9 @@
     "beforeDevCommand": "npm run dev:web",
     "beforeBuildCommand": "npm run build:web"
   },
+  "package": {
+    "productName": "Arcu"
+  },
   "tauri": {
     "systemTray": {
       "iconPath": "./icons/icon.png"
@@ -51,7 +54,7 @@
       "all": true
     },
     "security": {
-      "csp": "default-src blob: data: filesystem: ws: http: https: 'unsafe-eval' 'unsafe-inline'"
+      "csp": "default-src blob: data: filesystem: ws: http: https: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
     }
   }
 }

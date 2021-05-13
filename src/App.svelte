@@ -55,16 +55,8 @@
   }
 
   function keydown(e) {
-    console.log(e)
     if (checkShortcut(e, 'A', { cmdOrControl: true })) {
-      e.preventDefault()
-      selectElementContents(barElement)
-    } else if (checkShortcut(e, 'Z', { cmdOrControl: true })) {
-      e.preventDefault()
-      document.execCommand('undo')
-    } else if (checkShortcut(e, 'Z', { cmdOrControl: true, shift: true })) {
-      e.preventDefault()
-      document.execCommand('redo')
+      console.log('cmd+a')
     }
   }
 </script>
@@ -118,7 +110,7 @@
 
 <svelte:window on:keydown={keydown} />
 <main>
-  <img data-tauri-drag-region class="logo" alt="logo" src="../logo.svg" />
+  <img data-tauri-drag-region class="logo" alt="logo" src="/logo.svg" />
   <p
     class="bar"
     use:barShortcuts

@@ -4,7 +4,10 @@
 )]
 
 use tauri::Manager;
-use tauri::{generate_context, CustomMenuItem, SystemTrayMenuItem, WindowBuilder, WindowUrl};
+use tauri::{
+  api, generate_context, CustomMenuItem, Menu, MenuItem, SystemTrayMenuItem, WindowBuilder,
+  WindowUrl,
+};
 
 mod cmd;
 
@@ -14,6 +17,44 @@ fn main() {
   let tray_menu_items = vec![
     SystemTrayMenuItem::Custom(show),
     SystemTrayMenuItem::Custom(hide),
+  ];
+
+  let menu = vec![
+    // on macOS first menu is always app name
+    Menu::new(
+      "Arcu",
+      vec![
+        MenuItem::About("Arcu".to_string()),
+        MenuItem::Separator,
+        MenuItem::Services,
+        MenuItem::Separator,
+        MenuItem::Hide,
+        MenuItem::HideOthers,
+        MenuItem::ShowAll,
+        MenuItem::Separator,
+        MenuItem::Quit,
+      ],
+    ),
+    Menu::new(
+      "Edit",
+      vec![
+        MenuItem::Undo,
+        MenuItem::Redo,
+        MenuItem::Separator,
+        MenuItem::Cut,
+        MenuItem::Copy,
+        MenuItem::Paste,
+        MenuItem::Separator,
+        MenuItem::SelectAll,
+      ],
+    ),
+    Menu::new(
+      "Help",
+      vec![MenuItem::Custom(CustomMenuItem::new(
+        "learn-more".into(),
+        "Learn More",
+      ))],
+    ),
   ];
 
   let ctx = generate_context!();
@@ -42,6 +83,13 @@ fn main() {
         window.hide().unwrap();
       }
       e => println!("Unhandled tray event {}", e),
+    })
+    .menu(menu)
+    .on_menu_event(|event| match event.menu_item_id().as_str() {
+      "learn-more" => {
+        api::shell::open("https://github.com/probablykasper/arcu".to_string(), None).unwrap();
+      }
+      _ => {}
     })
     .run(ctx)
     .expect("error while running tauri app");
