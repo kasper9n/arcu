@@ -1,6 +1,5 @@
 <script>
   import { tauri, window as win, globalShortcut } from '@tauri-apps/api'
-  import { onMount } from 'svelte'
 
   let minitext = ''
   async function onInput(e) {

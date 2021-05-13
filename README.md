@@ -29,11 +29,4 @@ from Vestibulum arcu, latin for Spotlight.
 - File search
   - https://developer.apple.com/documentation/coreservices/search_kit
 - Macros
-- Move to Rust?
-  - https://docs.rs/enigo for macros
-  - Tray icon? Clipboard support?
-  - Shortcuts
-    - https://github.com/tauri-apps/tauri/blob/dev/tauri-api/src/shortcuts.rs
-    - https://github.com/tauri-apps/tauri-hotkey-rs/blob/dev/src/lib.rs
-    - https://docs.rs/rdev
-    - https://github.com/obv-mikhail/InputBot/issues/30 (https://github.com/aaronleopold/InputBot)
+  - https://docs.rs/enigo

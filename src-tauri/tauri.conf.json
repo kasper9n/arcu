@@ -6,6 +6,9 @@
     "beforeBuildCommand": "npm run build:web"
   },
   "tauri": {
+    "systemTray": {
+      "iconPath": "./icons/icon.png"
+    },
     "bundle": {
       "active": true,
       "targets": "all",
