@@ -27,14 +27,17 @@
   async function barShortcuts(barElement) {
     globalShortcut.unregisterAll()
     try {
-      await globalShortcut.register('Alt+Space', () => {
+      await globalShortcut.register('Alt+Space', async () => {
         shown = !shown
-        if (shown) {
-          win.appWindow.show()
-          barElement.focus()
-        } else {
+        if (await win.appWindow.isVisible()) {
           win.appWindow.hide()
           selectElementContents(barElement)
+        } else {
+          win.appWindow.show()
+          setTimeout(() => {
+            win.appWindow.setFocus()
+          }, 5)
+          barElement.focus()
         }
       })
     } catch (e) {

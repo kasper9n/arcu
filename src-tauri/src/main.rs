@@ -3,59 +3,48 @@
   windows_subsystem = "windows"
 )]
 
-use tauri::Manager;
 use tauri::{
-  api, generate_context, CustomMenuItem, Menu, MenuItem, SystemTrayMenuItem, WindowBuilder,
-  WindowUrl,
+  api, generate_context, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray,
+  SystemTrayEvent, WindowBuilder, WindowUrl,
 };
 
 mod cmd;
 
 fn main() {
-  let show = CustomMenuItem::new("show".to_string(), "Show");
-  let hide = CustomMenuItem::new("hide".to_string(), "Hide");
-  let tray_menu_items = vec![
-    SystemTrayMenuItem::Custom(show),
-    SystemTrayMenuItem::Custom(hide),
-  ];
+  let tray = SystemTray::new();
 
-  let menu = vec![
-    // on macOS first menu is always app name
-    Menu::new(
+  let menu = Menu::new()
+    .add_submenu(Submenu::new(
+      // on macOS first menu is always app name
       "Arcu",
-      vec![
-        MenuItem::About("Arcu".to_string()),
-        MenuItem::Separator,
-        MenuItem::Services,
-        MenuItem::Separator,
-        MenuItem::Hide,
-        MenuItem::HideOthers,
-        MenuItem::ShowAll,
-        MenuItem::Separator,
-        MenuItem::Quit,
-      ],
-    ),
-    Menu::new(
+      Menu::new()
+        .add_native_item(MenuItem::About("Arcu".to_string()))
+        .add_native_item(MenuItem::Separator)
+        .add_native_item(MenuItem::Services)
+        .add_native_item(MenuItem::Separator)
+        .add_native_item(MenuItem::Hide)
+        .add_native_item(MenuItem::HideOthers)
+        .add_native_item(MenuItem::ShowAll)
+        .add_native_item(MenuItem::Separator)
+        .add_native_item(MenuItem::Quit),
+    ))
+    .add_submenu(Submenu::new(
       "Edit",
-      vec![
-        MenuItem::Undo,
-        MenuItem::Redo,
-        MenuItem::Separator,
-        MenuItem::Cut,
-        MenuItem::Copy,
-        MenuItem::Paste,
-        MenuItem::Separator,
-        MenuItem::SelectAll,
-      ],
-    ),
-    Menu::new(
+      Menu::new()
+        .add_native_item(MenuItem::Undo)
+        .add_native_item(MenuItem::Redo)
+        .add_native_item(MenuItem::Separator)
+        .add_native_item(MenuItem::Cut)
+        .add_native_item(MenuItem::Copy)
+        .add_native_item(MenuItem::Paste)
+        .add_native_item(MenuItem::Separator)
+        .add_native_item(MenuItem::SelectAll),
+    ))
+    .add_submenu(Submenu::new(
       "Help",
-      vec![MenuItem::Custom(CustomMenuItem::new(
-        "learn-more".into(),
-        "Learn More",
-      ))],
-    ),
-  ];
+      Menu::new().add_item(CustomMenuItem::new("learn-more".into(), "Learn More")),
+    ))
+    .add_native_item(MenuItem::Copy);
 
   let ctx = generate_context!();
   tauri::Builder::default()
@@ -69,20 +58,25 @@ fn main() {
         .always_on_top(false)
         .inner_size(800.0, 600.0)
         .min_inner_size(300.0, 150.0)
+        .skip_taskbar(true)
         .fullscreen(false);
       return (win, webview);
     })
-    .system_tray(tray_menu_items)
-    .on_system_tray_event(|app, event| match event.menu_item_id().as_str() {
-      "show" => {
+    .system_tray(tray)
+    .on_system_tray_event(|app, event| match event {
+      SystemTrayEvent::LeftClick { .. } => {
         let window = app.get_window("main").unwrap();
-        window.show().unwrap();
+        let is_visible = window.is_visible().unwrap();
+        if is_visible {
+          // window.hide().unwrap();
+          window.minimize().unwrap();
+        } else {
+          window.show().unwrap();
+          std::thread::sleep(std::time::Duration::from_millis(5));
+          window.set_focus().unwrap();
+        }
       }
-      "hide" => {
-        let window = app.get_window("main").unwrap();
-        window.hide().unwrap();
-      }
-      e => println!("Unhandled tray event {}", e),
+      _ => {}
     })
     .menu(menu)
     .on_menu_event(|event| match event.menu_item_id().as_str() {
