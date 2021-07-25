@@ -4,8 +4,8 @@
 )]
 
 use tauri::{
-  api, generate_context, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray,
-  SystemTrayEvent, WindowBuilder, WindowUrl,
+  api, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent,
+  WindowBuilder, WindowUrl,
 };
 
 mod cmd;
@@ -42,14 +42,14 @@ fn main() {
     ))
     .add_submenu(Submenu::new(
       "Help",
-      Menu::new().add_item(CustomMenuItem::new("learn-more".into(), "Learn More")),
+      Menu::new().add_item(CustomMenuItem::new("learn-more", "Learn More")),
     ))
     .add_native_item(MenuItem::Copy);
 
-  let ctx = generate_context!();
+  let ctx = tauri::generate_context!();
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![cmd::query])
-    .create_window("main".into(), WindowUrl::default(), |win, webview| {
+    .create_window("main", WindowUrl::default(), |win, webview| {
       let win = win
         .title("Arcu")
         .resizable(true)
@@ -79,7 +79,7 @@ fn main() {
       _ => {}
     })
     .menu(menu)
-    .on_menu_event(|event| match event.menu_item_id().as_str() {
+    .on_menu_event(|event| match event.menu_item_id() {
       "learn-more" => {
         api::shell::open("https://github.com/probablykasper/arcu".to_string(), None).unwrap();
       }

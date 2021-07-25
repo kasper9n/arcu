@@ -34,9 +34,7 @@
           selectElementContents(barElement)
         } else {
           win.appWindow.show()
-          setTimeout(() => {
-            win.appWindow.setFocus()
-          }, 5)
+          win.appWindow.setFocus()
           barElement.focus()
         }
       })

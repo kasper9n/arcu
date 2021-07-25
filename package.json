@@ -9,14 +9,14 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.11",
-    "@tauri-apps/api": "1.0.0-beta.4",
-    "@tauri-apps/cli": "1.0.0-beta.5",
+    "@tauri-apps/api": "1.0.0-beta.5",
+    "@tauri-apps/cli": "1.0.0-beta.6",
     "prettier": "^2.3.2",
     "prettier-plugin-svelte": "^2.3.1",
-    "sass": "^1.35.1",
-    "svelte": "^3.38.3",
-    "svelte-preprocess": "^4.7.3",
-    "vite": "^2.3.8"
+    "sass": "^1.36.0",
+    "svelte": "^3.40.2",
+    "svelte-preprocess": "^4.7.4",
+    "vite": "^2.4.3"
   },
   "prettier": {
     "printWidth": 100,
