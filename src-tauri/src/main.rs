@@ -49,6 +49,10 @@ fn main() {
   let ctx = tauri::generate_context!();
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![cmd::query])
+    .setup(|app| {
+      app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+      Ok(())
+    })
     .create_window("main", WindowUrl::default(), |win, webview| {
       let win = win
         .title("Arcu")
@@ -68,8 +72,7 @@ fn main() {
         let window = app.get_window("main").unwrap();
         let is_visible = window.is_visible().unwrap();
         if is_visible {
-          // window.hide().unwrap();
-          window.minimize().unwrap();
+          window.hide().unwrap();
         } else {
           window.show().unwrap();
           std::thread::sleep(std::time::Duration::from_millis(5));
