@@ -5,7 +5,7 @@
 
 use tauri::{
   api, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent,
-  WindowBuilder, WindowUrl,
+  WindowBuilder, WindowEvent, WindowUrl,
 };
 
 mod cmd;
@@ -67,6 +67,14 @@ fn main() {
         .fullscreen(false);
       return (win, webview);
     })
+    .on_window_event(|event| match event.event() {
+      WindowEvent::Focused(focused) => {
+        if !focused {
+          event.window().hide().unwrap();
+        }
+      }
+      _ => {}
+    })
     .system_tray(tray)
     .on_system_tray_event(|app, event| match event {
       SystemTrayEvent::LeftClick { .. } => {
@@ -85,7 +93,7 @@ fn main() {
     .menu(menu)
     .on_menu_event(|event| {
       let event_name = event.menu_item_id();
-      let _ = event.window().emit("menu", event_name);
+      event.window().emit("menu", event_name).unwrap();
       match event_name {
         "Learn More" => {
           api::shell::open("https://kasper.space".to_string(), None).unwrap();
