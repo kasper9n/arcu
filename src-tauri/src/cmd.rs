@@ -1,5 +1,5 @@
 use cpc::{eval, units::Unit};
-use tauri::command;
+use tauri::{command, AppHandle};
 
 #[command]
 pub fn query(value: String) -> String {
@@ -19,5 +19,14 @@ pub fn query(value: String) -> String {
       println!("X err {:?}", e);
       return "".to_string();
     }
+  }
+}
+
+#[command]
+pub fn hide_app(app: AppHandle) -> bool {
+  if cfg!(target_os = "macos") {
+    app.hide().is_err()
+  } else {
+    false
   }
 }

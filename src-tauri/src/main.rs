@@ -42,14 +42,15 @@ fn main() {
     ))
     .add_submenu(Submenu::new(
       "Help",
-      Menu::new().add_item(CustomMenuItem::new("learn-more", "Learn More")),
+      Menu::new().add_item(CustomMenuItem::new("Learn More", "Learn More")),
     ))
     .add_native_item(MenuItem::Copy);
 
   let ctx = tauri::generate_context!();
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![cmd::query])
+    .invoke_handler(tauri::generate_handler![cmd::query, cmd::hide_app])
     .setup(|app| {
+      // hide from dock (also hides menu bar)
       app.set_activation_policy(tauri::ActivationPolicy::Accessory);
       Ok(())
     })
@@ -82,11 +83,15 @@ fn main() {
       _ => {}
     })
     .menu(menu)
-    .on_menu_event(|event| match event.menu_item_id() {
-      "learn-more" => {
-        api::shell::open("https://github.com/probablykasper/arcu".to_string(), None).unwrap();
+    .on_menu_event(|event| {
+      let event_name = event.menu_item_id();
+      let _ = event.window().emit("menu", event_name);
+      match event_name {
+        "Learn More" => {
+          api::shell::open("https://kasper.space".to_string(), None).unwrap();
+        }
+        _ => {}
       }
-      _ => {}
     })
     .run(ctx)
     .expect("error while running tauri app");

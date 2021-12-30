@@ -31,6 +31,7 @@
         shown = !shown
         if (await win.appWindow.isVisible()) {
           win.appWindow.hide()
+          await tauri.invoke('hide_app')
           selectElementContents(barElement)
         } else {
           win.appWindow.show()
