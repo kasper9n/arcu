@@ -1,5 +1,5 @@
 use cpc::{eval, units::Unit};
-use tauri::{command, AppHandle};
+use tauri::{command, AppHandle, Window};
 
 #[command]
 pub fn query(value: String) -> String {
@@ -23,10 +23,28 @@ pub fn query(value: String) -> String {
 }
 
 #[command]
-pub fn hide_app(app: AppHandle) -> bool {
+pub fn hide(app: AppHandle, win: Window) -> tauri::Result<()> {
   if cfg!(target_os = "macos") {
-    app.hide().is_err()
+    app.hide()?;
   } else {
-    false
+    win.hide()?;
   }
+  Ok(())
+}
+
+#[command]
+pub fn show(win: Window) -> tauri::Result<()> {
+  win.show()?;
+  win.set_focus()?;
+  Ok(())
+}
+
+#[command]
+pub fn toggle(app: AppHandle, win: Window) -> tauri::Result<()> {
+  if win.is_visible()? {
+    hide(app, win)?;
+  } else {
+    show(win)?;
+  }
+  Ok(())
 }

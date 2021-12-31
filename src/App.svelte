@@ -21,23 +21,13 @@
     sel.addRange(range)
   }
 
-  let shown = true
-  let barElement
-
   async function barShortcuts(barElement) {
     globalShortcut.unregisterAll()
     try {
       await globalShortcut.register('Alt+Space', async () => {
-        shown = !shown
-        if (await win.appWindow.isVisible()) {
-          win.appWindow.hide()
-          await tauri.invoke('hide_app')
-          selectElementContents(barElement)
-        } else {
-          win.appWindow.show()
-          win.appWindow.setFocus()
-          barElement.focus()
-        }
+        await tauri.invoke('toggle')
+        selectElementContents(barElement)
+        barElement.focus()
       })
     } catch (e) {
       console.error(e)
@@ -62,6 +52,13 @@
     }
   }
 </script>
+
+<svelte:window on:keydown={keydown} />
+<main>
+  <img data-tauri-drag-region class="logo" alt="logo" src="/logo.svg" />
+  <p class="bar" use:barShortcuts contenteditable="plaintext-only" on:input={onInput} />
+  <p class="minitext">{minitext}</p>
+</main>
 
 <style lang="sass">
   :global(body)
@@ -109,15 +106,3 @@
     opacity: 0.6
     margin-left: 5px
 </style>
-
-<svelte:window on:keydown={keydown} />
-<main>
-  <img data-tauri-drag-region class="logo" alt="logo" src="/logo.svg" />
-  <p
-    class="bar"
-    use:barShortcuts
-    bind:this={barElement}
-    contenteditable="plaintext-only"
-    on:input={onInput} />
-  <p class="minitext">{minitext}</p>
-</main>

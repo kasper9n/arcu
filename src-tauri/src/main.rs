@@ -48,7 +48,12 @@ fn main() {
 
   let ctx = tauri::generate_context!();
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![cmd::query, cmd::hide_app])
+    .invoke_handler(tauri::generate_handler![
+      cmd::query,
+      cmd::hide,
+      cmd::show,
+      cmd::toggle
+    ])
     .setup(|app| {
       // hide from dock (also hides menu bar)
       app.set_activation_policy(tauri::ActivationPolicy::Accessory);
