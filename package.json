@@ -6,7 +6,7 @@
     "tauri": "tauri",
     "build": "tauri build",
     "build:web": "vite build",
-    "lint": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
+    "format": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
     "check": "cargo check --manifest-path src-tauri/Cargo.toml && eslint src *.js && svelte-check"
   },
   "devDependencies": {
