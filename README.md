@@ -7,15 +7,18 @@ from Vestibulum arcu, latin for Spotlight.
 
 ## Dev instructions
 
-1. Install Node.js (v14 works)
-2. Install Rust (v1.50 works)
+### Get started
+
+1. Install Node.js
+2. Install Rust
 3. Follow the [Tauri setup guide](https://tauri.studio/en/docs/getting-started/intro)
 4. Run `npm install`
 
 ### Commands
-
 - `npm run dev`: Start app in dev mode
-- `npm run build`: Build app
+- `npm run build`: Build
+- `npm run format`: Format
+- `npm run check`: Check code
 
 ### ToDo
 - Stocks

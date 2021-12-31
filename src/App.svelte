@@ -1,5 +1,5 @@
 <script>
-  import { tauri, window as win, globalShortcut } from '@tauri-apps/api'
+  import { tauri, globalShortcut } from '@tauri-apps/api'
 
   let minitext = ''
   async function onInput(e) {
