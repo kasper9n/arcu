@@ -1,13 +1,14 @@
 {
   "private": true,
   "scripts": {
+    "tauri": "tauri",
     "dev": "tauri dev",
     "dev:web": "vite --port 7000",
-    "tauri": "tauri",
     "build": "tauri build",
     "build:web": "vite build",
-    "format": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
-    "check": "mkdir -p build && cargo check --manifest-path src-tauri/Cargo.toml && eslint src *.js && svelte-check"
+    "test": "echo 'No tests'",
+    "lint": "prettier --check --plugin-search-dir=. src *.js && eslint src *.js && svelte-check",
+    "format": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "1.0.0-next.37",
@@ -30,12 +31,6 @@
   "prettier": {
     "printWidth": 100,
     "semi": false,
-    "singleQuote": true,
-    "htmlWhitespaceSensitivity": "strict",
-    "svelteSortOrder": "options-scripts-markup-styles",
-    "svelteStrictMode": false,
-    "svelteAllowShorthand": true,
-    "svelteBracketNewLine": false,
-    "svelteIndentScriptAndStyle": true
+    "singleQuote": true
   }
 }

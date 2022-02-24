@@ -17,8 +17,8 @@ from Vestibulum arcu, latin for Spotlight.
 ### Commands
 - `npm run dev`: Start app in dev mode
 - `npm run build`: Build
+- `npm run lint`: Lint
 - `npm run format`: Format
-- `npm run check`: Check code
 
 ### ToDo
 - Stocks
