@@ -3,9 +3,10 @@
   windows_subsystem = "windows"
 )]
 
+use tauri::api::shell;
 use tauri::{
-  api, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent,
-  WindowBuilder, WindowEvent, WindowUrl,
+  CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, WindowBuilder,
+  WindowEvent, WindowUrl,
 };
 
 mod cmd;
@@ -63,7 +64,6 @@ fn main() {
       let win = win
         .title("Arcu")
         .resizable(true)
-        .transparent(false)
         .decorations(false)
         .always_on_top(false)
         .inner_size(800.0, 600.0)
@@ -101,7 +101,8 @@ fn main() {
       event.window().emit("menu", event_name).unwrap();
       match event_name {
         "Learn More" => {
-          api::shell::open("https://kasper.space".to_string(), None).unwrap();
+          let url = "https://kasper.space";
+          shell::open(&event.window().shell_scope(), url.to_string(), None).unwrap();
         }
         _ => {}
       }
