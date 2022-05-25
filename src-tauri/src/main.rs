@@ -5,48 +5,13 @@
 
 use tauri::api::shell;
 use tauri::{
-  CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, WindowBuilder,
-  WindowEvent, WindowUrl,
+  AboutMetadata, CustomMenuItem, Manager, Menu, MenuEntry, MenuItem, Submenu, SystemTray,
+  SystemTrayEvent, WindowBuilder, WindowEvent, WindowUrl,
 };
 
 mod cmd;
 
 fn main() {
-  let tray = SystemTray::new();
-
-  let menu = Menu::new()
-    .add_submenu(Submenu::new(
-      // on macOS first menu is always app name
-      "Arcu",
-      Menu::new()
-        .add_native_item(MenuItem::About("Arcu".to_string()))
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::Services)
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::Hide)
-        .add_native_item(MenuItem::HideOthers)
-        .add_native_item(MenuItem::ShowAll)
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::Quit),
-    ))
-    .add_submenu(Submenu::new(
-      "Edit",
-      Menu::new()
-        .add_native_item(MenuItem::Undo)
-        .add_native_item(MenuItem::Redo)
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::Cut)
-        .add_native_item(MenuItem::Copy)
-        .add_native_item(MenuItem::Paste)
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::SelectAll),
-    ))
-    .add_submenu(Submenu::new(
-      "Help",
-      Menu::new().add_item(CustomMenuItem::new("Learn More", "Learn More")),
-    ))
-    .add_native_item(MenuItem::Copy);
-
   let ctx = tauri::generate_context!();
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
@@ -60,8 +25,8 @@ fn main() {
       app.set_activation_policy(tauri::ActivationPolicy::Accessory);
       Ok(())
     })
-    .create_window("main", WindowUrl::default(), |win, webview| {
-      let win = win
+    .setup(|app| {
+      let _ = WindowBuilder::new(app, "main", WindowUrl::default())
         .title("Arcu")
         .resizable(true)
         .decorations(false)
@@ -69,8 +34,9 @@ fn main() {
         .inner_size(800.0, 600.0)
         .min_inner_size(300.0, 150.0)
         .skip_taskbar(true)
-        .fullscreen(false);
-      return (win, webview);
+        .build()
+        .expect("Unable to create window");
+      Ok(())
     })
     .on_window_event(|event| match event.event() {
       WindowEvent::Focused(focused) => {
@@ -80,7 +46,7 @@ fn main() {
       }
       _ => {}
     })
-    .system_tray(tray)
+    .system_tray(SystemTray::new())
     .on_system_tray_event(|app, event| match event {
       SystemTrayEvent::LeftClick { .. } => {
         let window = app.get_window("main").unwrap();
@@ -95,10 +61,45 @@ fn main() {
       }
       _ => {}
     })
-    .menu(menu)
+    .menu(Menu::with_items([
+      #[cfg(target_os = "macos")]
+      MenuEntry::Submenu(Submenu::new(
+        &ctx.package_info().name,
+        Menu::with_items([
+          MenuItem::About(ctx.package_info().name.clone(), AboutMetadata::default()).into(),
+          MenuItem::Separator.into(),
+          MenuItem::Services.into(),
+          MenuItem::Separator.into(),
+          MenuItem::Hide.into(),
+          MenuItem::HideOthers.into(),
+          MenuItem::ShowAll.into(),
+          MenuItem::Separator.into(),
+          MenuItem::Quit.into(),
+        ]),
+      )),
+      MenuEntry::Submenu(Submenu::new(
+        "Edit",
+        Menu::with_items([
+          MenuItem::Undo.into(),
+          MenuItem::Redo.into(),
+          MenuItem::Separator.into(),
+          MenuItem::Cut.into(),
+          MenuItem::Copy.into(),
+          MenuItem::Paste.into(),
+          #[cfg(not(target_os = "macos"))]
+          MenuItem::Separator.into(),
+          MenuItem::SelectAll.into(),
+        ]),
+      )),
+      // You should always have a Help menu on macOS because it will automatically
+      // show a menu search field
+      MenuEntry::Submenu(Submenu::new(
+        "Help",
+        Menu::with_items([CustomMenuItem::new("Learn More", "Learn More").into()]),
+      )),
+    ]))
     .on_menu_event(|event| {
       let event_name = event.menu_item_id();
-      event.window().emit("menu", event_name).unwrap();
       match event_name {
         "Learn More" => {
           let url = "https://kasper.space";
