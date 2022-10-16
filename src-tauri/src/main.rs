@@ -55,7 +55,6 @@ fn main() {
           window.hide().unwrap();
         } else {
           window.show().unwrap();
-          std::thread::sleep(std::time::Duration::from_millis(5));
           window.set_focus().unwrap();
         }
       }
