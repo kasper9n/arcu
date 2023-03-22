@@ -25,8 +25,8 @@
       ],
       "resources": [],
       "externalBin": [],
-      "copyright": "© 2021 kasper.space",
-      "category": "DeveloperTool",
+      "copyright": "© 2023 kasper.space",
+      "category": "Productivity",
       "shortDescription": "",
       "longDescription": "",
       "deb": {
@@ -34,7 +34,7 @@
       },
       "macOS": {
         "frameworks": [],
-        "minimumSystemVersion": "",
+        "minimumSystemVersion": "10.13",
         "exceptionDomain": "",
         "signingIdentity": null,
         "entitlements": null
@@ -57,7 +57,7 @@
       }
     },
     "security": {
-      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+      "csp": null
     }
   }
 }
