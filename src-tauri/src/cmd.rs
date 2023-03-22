@@ -13,7 +13,7 @@ pub fn query(value: String) -> String {
         Unit::NoUnit => "".to_owned(),
         x => format!(" {:?}", x),
       };
-      return "= ".to_owned() + &value + &unit;
+      return value + &unit;
     }
     Err(e) => {
       println!("X err {:?}", e);

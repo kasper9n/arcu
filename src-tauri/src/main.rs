@@ -26,16 +26,46 @@ fn main() {
       Ok(())
     })
     .setup(|app| {
-      let _ = WindowBuilder::new(app, "main", WindowUrl::default())
+      let win = WindowBuilder::new(app, "main", WindowUrl::default())
         .title("Arcu")
-        .resizable(true)
-        .decorations(false)
-        .always_on_top(false)
+        // .decorations(false)
         .inner_size(800.0, 600.0)
         .min_inner_size(300.0, 150.0)
-        .skip_taskbar(true)
-        .build()
-        .expect("Unable to create window");
+        .skip_taskbar(true);
+
+      #[cfg(target_os = "macos")]
+      let win = win
+        .title_bar_style(tauri::TitleBarStyle::Overlay)
+        .hidden_title(true);
+
+      let _win = win.build().expect("Unable to create window");
+
+      #[cfg(target_os = "macos")]
+      {
+        use cocoa::appkit::NSWindow;
+        let nsw = _win.ns_window().unwrap() as cocoa::base::id;
+        unsafe {
+          // set window to always be dark mode
+          use cocoa::appkit::NSAppearanceNameVibrantDark;
+          use objc::*;
+          let appearance: cocoa::base::id = msg_send![
+            class!(NSAppearance),
+            appearanceNamed: NSAppearanceNameVibrantDark
+          ];
+          let () = msg_send![nsw, setAppearance: appearance];
+
+          // set window background color
+          let bg_color = cocoa::appkit::NSColor::colorWithRed_green_blue_alpha_(
+            cocoa::base::nil,
+            0.0 / 255.0,
+            0.0 / 255.0,
+            0.0 / 255.0,
+            1.0,
+          );
+          nsw.setBackgroundColor_(bg_color);
+        }
+      }
+
       Ok(())
     })
     .on_window_event(|event| match event.event() {
