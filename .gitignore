@@ -1,4 +1,6 @@
-src-tauri/target/
-src-tauri/WixTools
-build
-.svelte-kit
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/src-tauri/target
+/src-tauri/WixTools

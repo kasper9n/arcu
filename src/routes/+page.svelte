@@ -47,10 +47,8 @@
 
 <svelte:window on:keydown={keydown} />
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <main on:mousedown|self|preventDefault>
 	<div class="bar-container" on:keydown={barKeydown} on:mousedown|self|preventDefault>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<img
 			data-tauri-drag-region
 			class="logo"

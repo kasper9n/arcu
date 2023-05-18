@@ -1,42 +1,42 @@
 {
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "tauri": "tauri",
-    "dev": "tauri dev",
-    "dev:web": "vite --port 7000",
-    "build": "tauri build",
-    "build:web": "vite build",
-    "test": "echo 'No tests'",
-    "lint": "prettier --check src *.js && eslint src *.js && svelte-check --tsconfig ./tsconfig.json",
-    "format": "prettier --write src *.js && eslint --fix src *.js"
-  },
-  "devDependencies": {
-    "@sveltejs/adapter-static": "^2.0.1",
-    "@sveltejs/kit": "^1.13.0",
-    "@tauri-apps/api": "^1.2.0",
-    "@tauri-apps/cli": "^1.2.3",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.36.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-svelte3": "^4.0.0",
-    "prettier": "^2.8.6",
-    "prettier-plugin-svelte": "^2.9.0",
-    "sass": "^1.59.3",
-    "svelte": "^3.57.0",
-    "svelte-check": "^3.1.4",
-    "typescript": "^5.0.2",
-    "vite": "^4.2.1"
-  },
-  "prettier": {
-    "useTabs": true,
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": true,
-    "pluginSearchDirs": [
-      "."
-    ]
-  }
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"tauri": "tauri",
+		"dev": "tauri dev",
+		"dev:web": "vite --port 7000",
+		"build": "tauri build",
+		"build:web": "vite build",
+		"lint": "svelte-check --tsconfig ./tsconfig.json && eslint src && prettier --check src",
+		"format": "eslint --fix src && prettier --write src"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-static": "^2.0.2",
+		"@sveltejs/kit": "^1.18.0",
+		"@tauri-apps/api": "^1.3.0",
+		"@tauri-apps/cli": "^1.3.1",
+		"@tsconfig/svelte": "^4.0.1",
+		"@typescript-eslint/eslint-plugin": "^5.59.6",
+		"@typescript-eslint/parser": "^5.59.6",
+		"autoprefixer": "^10.4.14",
+		"eslint": "^8.40.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-svelte": "^2.28.0",
+		"prettier": "^2.8.8",
+		"prettier-plugin-svelte": "^2.10.0",
+		"sass": "^1.62.1",
+		"svelte": "^3.59.1",
+		"svelte-check": "^3.3.2",
+		"typescript": "^5.0.4",
+		"vite": "^4.3.8"
+	},
+	"prettier": {
+		"useTabs": true,
+		"printWidth": 100,
+		"semi": false,
+		"singleQuote": true,
+		"pluginSearchDirs": [
+			"."
+		]
+	}
 }
